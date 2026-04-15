@@ -3,8 +3,6 @@ require_once 'config.php';
 
 $method = $_SERVER['REQUEST_METHOD'];
 $pdo    = getDB();
-
-// ── GET /favorites.php?user_id=1 ──────────────────────────────────────────────
 if ($method === 'GET') {
     $user_id = (int)($_GET['user_id'] ?? 0);
     if (!$user_id) {
@@ -18,8 +16,6 @@ if ($method === 'GET') {
     echo json_encode(array_column($rows, 'fighter_id'));
     exit;
 }
-
-// ── POST /favorites.php  { user_id, fighter_id } ─────────────────────────────
 if ($method === 'POST') {
     $data       = json_decode(file_get_contents('php://input'), true);
     $user_id    = (int)($data['user_id']   ?? 0);
@@ -31,7 +27,6 @@ if ($method === 'POST') {
         exit;
     }
 
-    // INSERT IGNORE evita duplicati grazie al UNIQUE KEY
     $stmt = $pdo->prepare(
         'INSERT IGNORE INTO favorites (user_id, fighter_id) VALUES (?, ?)'
     );
@@ -40,8 +35,6 @@ if ($method === 'POST') {
     echo json_encode(['success' => true]);
     exit;
 }
-
-// ── DELETE /favorites.php  { user_id, fighter_id } ───────────────────────────
 if ($method === 'DELETE') {
     $data       = json_decode(file_get_contents('php://input'), true);
     $user_id    = (int)($data['user_id']   ?? 0);
