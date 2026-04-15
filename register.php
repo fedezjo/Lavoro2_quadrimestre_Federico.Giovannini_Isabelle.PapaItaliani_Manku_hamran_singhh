@@ -14,7 +14,7 @@ $last_name  = trim($data['last_name']  ?? '');
 $email      = trim($data['email']      ?? '');
 $password   = trim($data['password']   ?? '');
 
-// Validazione
+
 if (!$first_name || !$last_name || !$email || !$password) {
     http_response_code(400);
     echo json_encode(['error' => 'Tutti i campi sono obbligatori']);
@@ -44,10 +44,7 @@ if ($stmt->fetch()) {
     exit;
 }
 
-// Hash password
 $password_hash = password_hash($password, PASSWORD_BCRYPT);
-
-// Inserisce utente
 $stmt = $pdo->prepare(
     'INSERT INTO users (first_name, last_name, email, password_hash) VALUES (?, ?, ?, ?)'
 );
