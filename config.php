@@ -1,5 +1,4 @@
 <?php
-// ─── Configurazione Database ───────────────────
 define('DB_HOST', '127.0.0.1');
 define('DB_NAME', 'jablab');
 define('DB_USER', 'root');
@@ -24,13 +23,10 @@ function getDB() {
     return $pdo;
 }
 
-// Headers CORS per React (localhost:3000)
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: http://localhost:3000');
 header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
-
-// Risposta alle preflight OPTIONS
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
